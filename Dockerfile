@@ -21,12 +21,8 @@
 FROM cupenya/docker-jenkins-slave-mongo-ivy2-cache
 MAINTAINER Elmar Weber <elmar(.)weber(@)cupenya(.)com>
 
-#setup es
+# Setup Elastic Search
 USER root
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && \
-  echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.0.list && \
-  apt-get update && apt-get install -y mongodb-org=3.0.1 mongodb-org-server=3.0.1 mongodb-org-shell=3.0.1 mongodb-org-mongos=3.0.1 mongodb-org-tools=3.0.1
-
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys 46095ACC8548582C1A2699A9D27D666CD88E42B4
 
 ENV ELASTICSEARCH_VERSION 2.3.3
@@ -51,7 +47,7 @@ COPY config ./config
 
 COPY supervisord-elasticsearch.conf /etc/supervisor/conf.d/elasticsearch.conf
 
-# restore user for jenkins slave
+# Restore user for Jenkins slave
 USER jenkins
 WORKDIR /home/jenkins
 
